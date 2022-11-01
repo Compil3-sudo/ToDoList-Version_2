@@ -1,0 +1,38 @@
+<%- include("header") -%>
+
+  <div class="box" id="heading">
+    <h1 class="listTitle">
+      <%= listTitle %>
+    </h1>
+  </div>
+
+  <% allLists.forEach(list=> { %>
+    <div class="box" id="heading" style="background-color: #8390e3">
+      <h1 class="listTitle">
+        <%= list.name %>
+      </h1>
+    </div>
+
+    <div class="box">
+      <% list.items.forEach(item=> { %>
+        <form action="/delete" method="post">
+          <div class="item">
+            <input type="checkbox" name="deleteCheckbox" value="<%=item._id%>" onChange="this.form.submit()">
+            <p class="listItem">
+              <%=item.name%>
+            </p>
+          </div>
+          <input type="hidden" name="dashboardList" value="<%= listTitle %>">
+          <input type="hidden" name="listDeleteName" value="<%= list.name %>">
+        </form>
+        <% }) %>
+
+          <form class="item" action="/addItem" method="post">
+            <input type="text" name="newItem" placeholder="New Item" autocomplete="off">
+            <input type="hidden" name="dashboardList" value="<%= listTitle %>">
+            <button class="plusButton" type="submit" name="list" value="<%= list.name %>">+</button>
+          </form>
+    </div>
+    <% }) %>
+
+      <%- include("footer") -%>

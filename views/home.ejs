@@ -1,0 +1,87 @@
+<%- include("header") -%>
+
+
+    <div class="container">
+        <div class="row">
+
+            <div class="col">
+                <div class="container">
+                    <div class="row helpSpace">
+                    </div>
+
+                    <div class="row">
+                        <div class="info-box">
+                            <div class="item">
+                                <h1 class="info-heading">This is a ToDo List App</h1>
+                            </div>
+                            <div class="item">
+                                <h2 class="info">You can create and store your own lists.</h2>
+                            </div>
+                            <div class="item">
+                                <p>Create new empty lists with a custom Title, or predifined current
+                                    <strong>Day</strong>. If the list already exists, you will be redirected to
+                                    your list. You can also view all your saved lists from the <a
+                                        href="/view">Views</a> tab
+                                    or read about the developer in the <a href="/about">About</a> tab. You can also edit
+                                    all your existing lists from the <a href="/dashboard">Dashboard</a> tab.
+                                </p>
+                            </div>
+                            <form class="item" action="/createList" method="post">
+                                <input type="text" name="newList" placeholder="List Title" autocomplete="off">
+                                <button class="plusButton" type="submit" name="createList"
+                                    value="<%= listTitle %>">+</button>
+                            </form>
+                            <form class="item" action="/createList" method="post">
+                                <input type="hidden" name="newList" placeholder="Title: Current Day" value="Day"
+                                    autocomplete="off">
+                                <p class="currentDay">List Title: Current Day</p>
+                                <button class="plusButton" type="submit" name="createList"
+                                    value="<%= listTitle %>">+</button>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col">
+
+                <div class="container">
+                    <div class="row">
+
+                        <div class="box" id="heading">
+                            <h1 class="listTitle">
+                                <%= listTitle %>
+                            </h1>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="box">
+                            <% newListItems.forEach(item=> { %>
+                                <form action="/delete" method="post">
+                                    <div class="item">
+                                        <input type="checkbox" name="deleteCheckbox" value="<%=item._id%>"
+                                            onChange="this.form.submit()">
+                                        <p class="listItem">
+                                            <%=item.name%>
+                                        </p>
+                                    </div>
+                                    <input type="hidden" name="listDeleteName" value="<%= listTitle %>">
+                                </form>
+                                <% }) %>
+                                    <form class="item" action="/addItem" method="post">
+                                        <input type="text" name="newItem" placeholder="New Item" autocomplete="off">
+                                        <button class="plusButton" type="submit" name="list"
+                                            value="<%= listTitle %>">+</button>
+                                    </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <%- include("footer") -%>
